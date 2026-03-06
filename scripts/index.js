@@ -146,10 +146,12 @@ const displayTrees=(data)=>{
                 <img
                 src="${tree.image}"
                 alt="${tree.name}"
-                title="${tree.name}" />
+                title="${tree.name}"
+                onclick="loadTreeModal(${tree.id})"
+                class="cursor-pointer" />
             </figure>
             <div class="card-body">
-                <h2 onclick="loadTreeModal(${tree.id})" class="card-title cursor-pointer">${tree.name}</h2>
+                <h2 onclick="loadTreeModal(${tree.id})" class="card-title cursor-pointer hover:text-[#46472d]">${tree.name}</h2>
                 <p class="line-clamp-2">${tree.description}</p>
                 <div class="badge badge-outline">${tree.category}</div>
                 <div class="card-actions justify-between items-center">
