@@ -12,11 +12,27 @@ const showLoading=(status)=>{
         document.getElementById('spinner').classList.add('hidden');
     }
 }
+// button remove active class
+const removeActiveClass=()=>{
+    const allCategoryBtn = document.querySelectorAll('.categoryBtn');
+    allCategoryBtn.forEach((btn)=> {
+        btn.classList.remove('btn-primary');
+        btn.classList.add('btn-outline');
+    });
+}
+
 // button onclick
 const loadCategory = async (id) => {
     showLoading(true);
     const res = await fetch(`https://openapi.programming-hero.com/api/category/${id}`);
     const data = await res.json();
+    // button active class code
+    removeActiveClass();
+    const clickedBtn = document.getElementById(`categoryBtn-${id}`);
+    // console.log(clickedBtn);
+    clickedBtn.classList.add('btn-primary');
+    clickedBtn.classList.remove('btn-outline');
+    
     showLoading(false);
 
     showCategory(data.plants);
@@ -60,7 +76,7 @@ const laodCatagories=async ()=>{
         const newBtn = document.createElement('div');
         newBtn.innerHTML = `
         <div>
-            <button onclick="loadCategory(${category.id})" class="btn btn-outline btn-outline w-full">${category.category_name}</button>
+            <button onclick="loadCategory(${category.id})" id="categoryBtn-${category.id}" class="btn btn-outline w-full categoryBtn">${category.category_name}</button>
         </div>
         `;
         catagoriesContainer.append(newBtn);
