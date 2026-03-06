@@ -1,7 +1,8 @@
 const catagoriesContainer = document.getElementById('catagories-container');
 const treesContainer = document.getElementById('trees-container');
+const spinner = document.getElementById('spinner');
 
-// loading left side category btn
+// loading displaying left side category btn
 const laodCatagories=async ()=>{
     const res = await fetch('https://openapi.programming-hero.com/api/categories');
     const data = await res.json();
@@ -20,20 +21,25 @@ const laodCatagories=async ()=>{
 
 // loading main tree cards
 const loadTreeCard=async()=>{
+    spinner.classList.remove('hidden');
+    spinner.classList.add('flex');
     const res = await fetch('https://openapi.programming-hero.com/api/plants')
     const data = await res.json();
+    spinner.classList.add('hidden');
     displayTrees(data);
 }
 
+// displaying main tree cards
 const displayTrees=(data)=>{
     data.plants.forEach((tree)=>{
         const newTreeCard = document.createElement('div');
         newTreeCard.innerHTML = `
-        <div class="card bg-base-100 shadow-sm h-[450px]">
+        <div id="treeCard" class="card bg-base-100 shadow-sm h-[450px]">
             <figure>
                 <img
                 src="${tree.image}"
-                alt="Mango-Tree" />
+                alt="${tree.name}"
+                title="${tree.name}" />
             </figure>
             <div class="card-body">
                 <h2 class="card-title">${tree.name}</h2>
