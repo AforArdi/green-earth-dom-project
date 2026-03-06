@@ -61,7 +61,31 @@
                 </div>
             </div>
 
-            <div class="bg-base-300 rounded-2xl col-span-3 font-semibold text-xl text-center text-[#1F2937]sticky top-8">Cart</div>
+            <div class="bg-base-300 rounded-2xl col-span-3 text-[#1F2937] sticky top-8">
+                <h2 class="font-semibold text-2xl text-center text-[#1F2937] mb-2">Cart</h2>
+                <div id="cart-container" class="space-y-4">
+                    <!-- <div class="card card-body bg-slate-100">
+                        <div class="flex justify-between items-center">
+                            <div>
+                                <h2>Name</h2>
+                                <p> $2000 × 10</p>
+                            </div>
+                            <button class="btn btn-ghost">X</button>
+                        </div>
+                        <p class="text-right font-semibold text-xl">$500</p>
+                    </div> -->
+
+                    <!-- initial message when nothing -->
+                    <div id="emptyCartMessage" class="text-center py-4">
+                        <p>Your cart is empty</p>
+                        <p>Add trees to get started</p>
+                    </div>
+                </div>
+                <!-- Total amount -->
+                <div class="flex justify-between items-center bg-green-50 rounded-lg p-4 my-3 font-semibold">
+                    <span>Total:</span>
+                    <span id="total-price">$0</span>
+                </div>
         </section>
 
         <!-- modal -->

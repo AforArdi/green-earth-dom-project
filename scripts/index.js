@@ -3,6 +3,9 @@ const treesContainer = document.getElementById('trees-container');
 const spinner = document.getElementById('spinner');
 const treeDetailsModal = document.getElementById('tree-details-modal');
 const modalDetailsContainer = document.getElementById('modal-details-container');
+let cart = [];
+const cartContainer = document.getElementById('cart-container');
+const totalPrice = document.getElementById('total-price');
 
 // manage loading
 const showLoading=(status)=>{
@@ -14,6 +17,8 @@ const showLoading=(status)=>{
         document.getElementById('spinner').classList.add('hidden');
     }
 }
+
+
 // treeDetailsModal + showTreeModal
 const loadTreeModal= async(treeId)=>{
     const res = await fetch(`https://openapi.programming-hero.com/api/plant/${treeId}`);
@@ -26,7 +31,7 @@ const showTreeModal=(tree)=>{
         <div class="flex justify-between items-center">
             <h2 class="card-title cursor-pointer">${tree.name}</h2>
             <form method="dialog">
-                <button class="btn btn-xs rounded-full">
+                <button class="btn btn-xs btn-ghost">
                     <i class="fa-solid fa-xmark"></i>
                 </button>
             </form>
@@ -109,6 +114,7 @@ document.getElementById('allTreesbtn').addEventListener('click', () => {
     loadTreeCard();
 });
 
+
 // loading + displaying left side category btn
 const laodCatagories=async ()=>{
     const res = await fetch('https://openapi.programming-hero.com/api/categories');
@@ -156,7 +162,7 @@ const displayTrees=(data)=>{
                 <div class="badge badge-outline">${tree.category}</div>
                 <div class="card-actions justify-between items-center">
                     <h2 class="font-bold text-2xl">$${tree.price}</h2>
-                    <button class="btn btn-secondary">Cart</button>
+                    <button onclick="addToCart(${tree.id}, '${tree.name}', ${tree.price})" class="btn btn-secondary">Cart</button>
                 </div>
             </div>
         </div>
@@ -165,19 +171,53 @@ const displayTrees=(data)=>{
     })
 }
 
-// below display function is also working about showing the categories
-// const displayCatagories=(data)=>{
-//     const catagoriesContainer = document.getElementById('catagories-container');
-//     data.categories.forEach(element => {
-//         const newE = document.createElement('div');
-//         newE.innerHTML = `
-//         <div>
-//             <button class="btn btn-outline btn-secondary w-full">${element.category_name}</button>
-//         </div>
-//         `;
-//         catagoriesContainer.append(newE);
-//     });
-// }
+// cart code
+const addToCart=(id, name, price)=>{
+    // console.log(id, name, price);
+    const existingTree = cart.find((item)=> item.id == id);
+    if(existingTree){
+        existingTree.quantity+=1;
+    }else{
+        cart.push({
+            id, 
+            name, 
+            price,
+            quantity: 1
+        });
+    }
+    
+    updateCart();
+}
+const updateCart=()=>{
+    cartContainer.innerHTML = '';
+    // console.log(cart);
+    let total = 0;
+    cart.forEach((item)=>{
+        total += item.price * item.quantity;
+        const plantInCart = document.createElement('div');
+        plantInCart.innerHTML = `
+            <div class="card card-body bg-slate-100">
+                <div class="flex justify-between items-center">
+                    <div>
+                        <h2>${item.name}</h2>
+                        <p> $${item.price} × ${item.quantity}</p>
+                    </div>
+                    <button onclick="removeCartItem(${item.id})" class="btn btn-ghost">X</button>
+                </div>
+                <p class="text-right font-semibold text-xl">$${item.price * item.quantity}</p>
+            </div>
+        `;
+        cartContainer.append(plantInCart);
+    });
+    // console.log(total);
+    // can't loop total div in every loop iteration, instead it's in html just changing the innerText
+    totalPrice.innerText = `$${total}`;
+}
+const removeCartItem=(treeId)=>{
+    const cartAfterRemove = cart.filter((item)=> item.id !== treeId);
+    cart = cartAfterRemove;
+    updateCart();
+}
 
 laodCatagories();
 loadTreeCard();
