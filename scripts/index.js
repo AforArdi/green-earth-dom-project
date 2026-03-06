@@ -6,6 +6,7 @@ const modalDetailsContainer = document.getElementById('modal-details-container')
 let cart = [];
 const cartContainer = document.getElementById('cart-container');
 const totalPrice = document.getElementById('total-price');
+const emptyCartMessage = document.getElementById('emptyCartMessage');
 
 // manage loading
 const showLoading=(status)=>{
@@ -190,8 +191,18 @@ const addToCart=(id, name, price)=>{
 }
 const updateCart=()=>{
     cartContainer.innerHTML = '';
-    // console.log(cart);
+    
+    // total disappearing
+    if (cart.length === 0) {
+        emptyCartMessage.classList.remove("hidden");
+        totalPrice.textContent = `$${0}`;
+        return;
+    }
+    emptyCartMessage.classList.add("hidden");
+
+
     let total = 0;
+
     cart.forEach((item)=>{
         total += item.price * item.quantity;
         const plantInCart = document.createElement('div');
