@@ -1,10 +1,13 @@
 const catagoriesContainer = document.getElementById('catagories-container');
+const treesContainer = document.getElementById('trees-container');
+
+// loading left side category btn
 const laodCatagories=async ()=>{
     const res = await fetch('https://openapi.programming-hero.com/api/categories');
     const data = await res.json();
     // displayCatagories(data);
     data.categories.forEach((category)=>{
-        console.log(category);
+        // console.log(category);
         const newBtn = document.createElement('div');
         newBtn.innerHTML = `
         <div>
@@ -13,6 +16,38 @@ const laodCatagories=async ()=>{
         `;
         catagoriesContainer.append(newBtn);
     });
+}
+
+// loading main tree cards
+const loadTreeCard=async()=>{
+    const res = await fetch('https://openapi.programming-hero.com/api/plants')
+    const data = await res.json();
+    displayTrees(data);
+}
+
+const displayTrees=(data)=>{
+    data.plants.forEach((tree)=>{
+        const newTreeCard = document.createElement('div');
+        newTreeCard.innerHTML = `
+        <div class="card bg-base-100 shadow-sm h-[450px]">
+            <figure>
+                <img
+                src="${tree.image}"
+                alt="Mango-Tree" />
+            </figure>
+            <div class="card-body">
+                <h2 class="card-title">${tree.name}</h2>
+                <p class="line-clamp-2">${tree.description}</p>
+                <div class="badge badge-outline">${tree.category}</div>
+                <div class="card-actions justify-between items-center">
+                    <h2 class="font-bold text-2xl">$${tree.price}</h2>
+                    <button class="btn btn-secondary">Cart</button>
+                </div>
+            </div>
+        </div>
+        `;
+        treesContainer.append(newTreeCard);
+    })
 }
 
 // below display function is also working about showing the categories
@@ -30,3 +65,4 @@ const laodCatagories=async ()=>{
 // }
 
 laodCatagories();
+loadTreeCard();
