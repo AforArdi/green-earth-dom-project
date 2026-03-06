@@ -14,11 +14,16 @@ const showLoading=(status)=>{
 }
 // button remove active class
 const removeActiveClass=()=>{
-    const allCategoryBtn = document.querySelectorAll('.categoryBtn');
+    const allCategoryBtn = document.querySelectorAll('.categoryBtn, #allTreesbtn');
     allCategoryBtn.forEach((btn)=> {
         btn.classList.remove('btn-primary');
         btn.classList.add('btn-outline');
     });
+}
+const setActiveBtn=(btn)=>{
+    removeActiveClass();
+    btn.classList.add('btn-primary');
+    btn.classList.remove('btn-outline');
 }
 
 // button onclick
@@ -30,8 +35,7 @@ const loadCategory = async (id) => {
     removeActiveClass();
     const clickedBtn = document.getElementById(`categoryBtn-${id}`);
     // console.log(clickedBtn);
-    clickedBtn.classList.add('btn-primary');
-    clickedBtn.classList.remove('btn-outline');
+    setActiveBtn(clickedBtn);
     
     showLoading(false);
 
@@ -64,7 +68,14 @@ const showCategory = (plants) => {
         treesContainer.append(filteredTreeCard);
     });
 }
+document.getElementById('allTreesbtn').addEventListener('click', () => {
+    removeActiveClass();
 
+    const allTreesBtn = document.getElementById('allTreesbtn');
+    setActiveBtn(allTreesBtn);
+
+    loadTreeCard();
+});
 
 // loading + displaying left side category btn
 const laodCatagories=async ()=>{
@@ -94,6 +105,7 @@ const loadTreeCard=async()=>{
 
 // displaying main tree cards
 const displayTrees=(data)=>{
+    treesContainer.innerHTML = '';
     data.plants.forEach((tree)=>{
         const newTreeCard = document.createElement('div');
         newTreeCard.innerHTML = `
