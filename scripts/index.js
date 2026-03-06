@@ -39,35 +39,36 @@ const loadCategory = async (id) => {
     
     showLoading(false);
 
-    showCategory(data.plants);
+    // showCategory(data.plants);
+    displayTrees(data);
 }
-const showCategory = (plants) => {
-    treesContainer.innerHTML = ''; // clear old cards first
+// const showCategory = (plants) => {
+//     treesContainer.innerHTML = ''; // clear old cards first
 
-    plants.forEach((plant) => {
-        const filteredTreeCard = document.createElement('div');
-        filteredTreeCard.innerHTML = `
-            <div class="card bg-base-100 shadow-sm h-[450px]">
-            <figure>
-                <img
-                src="${plant.image}"
-                alt="${plant.name}"
-                title="${plant.name}" />
-            </figure>
-            <div class="card-body">
-                <h2 class="card-title">${plant.name}</h2>
-                <p class="line-clamp-2">${plant.description}</p>
-                <div class="badge badge-outline">${plant.category}</div>
-                <div class="card-actions justify-between items-center">
-                    <h2 class="font-bold text-2xl">$${plant.price}</h2>
-                    <button class="btn btn-secondary">Cart</button>
-                </div>
-            </div>
-        </div>
-        `;
-        treesContainer.append(filteredTreeCard);
-    });
-}
+//     plants.forEach((plant) => {
+//         const filteredTreeCard = document.createElement('div');
+//         filteredTreeCard.innerHTML = `
+//             <div class="card bg-base-100 shadow-sm h-[450px]">
+//             <figure>
+//                 <img
+//                 src="${plant.image}"
+//                 alt="${plant.name}"
+//                 title="${plant.name}" />
+//             </figure>
+//             <div class="card-body">
+//                 <h2 class="card-title">${plant.name}</h2>
+//                 <p class="line-clamp-2">${plant.description}</p>
+//                 <div class="badge badge-outline">${plant.category}</div>
+//                 <div class="card-actions justify-between items-center">
+//                     <h2 class="font-bold text-2xl">$${plant.price}</h2>
+//                     <button class="btn btn-secondary">Cart</button>
+//                 </div>
+//             </div>
+//         </div>
+//         `;
+//         treesContainer.append(filteredTreeCard);
+//     });
+// }
 document.getElementById('allTreesbtn').addEventListener('click', () => {
     removeActiveClass();
 
