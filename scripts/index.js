@@ -1,6 +1,8 @@
 const catagoriesContainer = document.getElementById('catagories-container');
 const treesContainer = document.getElementById('trees-container');
 const spinner = document.getElementById('spinner');
+const treeDetailsModal = document.getElementById('tree-details-modal');
+const modalDetailsContainer = document.getElementById('modal-details-container');
 
 // manage loading
 const showLoading=(status)=>{
@@ -12,6 +14,27 @@ const showLoading=(status)=>{
         document.getElementById('spinner').classList.add('hidden');
     }
 }
+// treeDetailsModal + showTreeModal
+const loadTreeModal= async(treeId)=>{
+    const res = await fetch(`https://openapi.programming-hero.com/api/plant/${treeId}`);
+    const data = await res.json();
+    showTreeModal(data.plants);
+}
+const showTreeModal=(tree)=>{
+    // class="line-clamp-3"
+    modalDetailsContainer.innerHTML = `
+        <h2 class="card-title">${tree.name}</h2>
+        <p class="text-justify">${tree.description}</p>
+        <div class="badge badge-outline">${tree.category}</div>
+        <div class="card-actions justify-between items-center">
+        <h2 class="font-bold text-2xl">$${tree.price}</h2>
+        <button class="btn btn-secondary">Cart</button>
+        </div>
+    `;
+    treeDetailsModal.showModal();
+}
+
+
 // button remove active class
 const removeActiveClass=()=>{
     const allCategoryBtn = document.querySelectorAll('.categoryBtn, #allTreesbtn');
@@ -118,7 +141,7 @@ const displayTrees=(data)=>{
                 title="${tree.name}" />
             </figure>
             <div class="card-body">
-                <h2 class="card-title">${tree.name}</h2>
+                <h2 onclick="loadTreeModal(${tree.id})" class="card-title">${tree.name}</h2>
                 <p class="line-clamp-2">${tree.description}</p>
                 <div class="badge badge-outline">${tree.category}</div>
                 <div class="card-actions justify-between items-center">
