@@ -2,6 +2,17 @@ const catagoriesContainer = document.getElementById('catagories-container');
 const treesContainer = document.getElementById('trees-container');
 const spinner = document.getElementById('spinner');
 
+// manage loading
+const showLoading=(status)=>{
+    if(status==true){
+        document.getElementById('spinner').classList.remove('hidden');
+        document.getElementById('trees-container').classList.add('hidden');
+    } else{
+        document.getElementById('trees-container').classList.remove('hidden');
+        document.getElementById('spinner').classList.add('hidden');
+    }
+}
+
 // loading displaying left side category btn
 const laodCatagories=async ()=>{
     const res = await fetch('https://openapi.programming-hero.com/api/categories');
@@ -21,11 +32,10 @@ const laodCatagories=async ()=>{
 
 // loading main tree cards
 const loadTreeCard=async()=>{
-    spinner.classList.remove('hidden');
-    spinner.classList.add('flex');
+    showLoading(true);
     const res = await fetch('https://openapi.programming-hero.com/api/plants')
     const data = await res.json();
-    spinner.classList.add('hidden');
+    showLoading(false);
     displayTrees(data);
 }
 
