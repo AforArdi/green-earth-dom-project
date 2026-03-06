@@ -24,7 +24,7 @@ const showTreeModal=(tree)=>{
     // class="line-clamp-3"
     modalDetailsContainer.innerHTML = `
         <div class="flex justify-between items-center">
-            <h2 class="card-title">${tree.name}</h2>
+            <h2 class="card-title cursor-pointer">${tree.name}</h2>
             <form method="dialog">
                 <button class="btn btn-xs rounded-full">
                     <i class="fa-solid fa-xmark"></i>
@@ -149,7 +149,7 @@ const displayTrees=(data)=>{
                 title="${tree.name}" />
             </figure>
             <div class="card-body">
-                <h2 onclick="loadTreeModal(${tree.id})" class="card-title">${tree.name}</h2>
+                <h2 onclick="loadTreeModal(${tree.id})" class="card-title cursor-pointer">${tree.name}</h2>
                 <p class="line-clamp-2">${tree.description}</p>
                 <div class="badge badge-outline">${tree.category}</div>
                 <div class="card-actions justify-between items-center">
