@@ -23,7 +23,15 @@ const loadTreeModal= async(treeId)=>{
 const showTreeModal=(tree)=>{
     // class="line-clamp-3"
     modalDetailsContainer.innerHTML = `
-        <h2 class="card-title">${tree.name}</h2>
+        <div class="flex justify-between items-center">
+            <h2 class="card-title">${tree.name}</h2>
+            <form method="dialog">
+                <button class="btn btn-xs rounded-full">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </form>
+        </div>
+
         <p class="text-justify">${tree.description}</p>
         <div class="badge badge-outline">${tree.category}</div>
         <div class="card-actions justify-between items-center">
