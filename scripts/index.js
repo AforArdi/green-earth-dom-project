@@ -12,8 +12,45 @@ const showLoading=(status)=>{
         document.getElementById('spinner').classList.add('hidden');
     }
 }
+// button onclick
+const loadCategory = async (id) => {
+    showLoading(true);
+    const res = await fetch(`https://openapi.programming-hero.com/api/category/${id}`);
+    const data = await res.json();
+    showLoading(false);
 
-// loading displaying left side category btn
+    showCategory(data.plants);
+}
+const showCategory = (plants) => {
+    treesContainer.innerHTML = ''; // clear old cards first
+
+    plants.forEach((plant) => {
+        const filteredTreeCard = document.createElement('div');
+        filteredTreeCard.innerHTML = `
+            <div class="card bg-base-100 shadow-sm h-[450px]">
+            <figure>
+                <img
+                src="${plant.image}"
+                alt="${plant.name}"
+                title="${plant.name}" />
+            </figure>
+            <div class="card-body">
+                <h2 class="card-title">${plant.name}</h2>
+                <p class="line-clamp-2">${plant.description}</p>
+                <div class="badge badge-outline">${plant.category}</div>
+                <div class="card-actions justify-between items-center">
+                    <h2 class="font-bold text-2xl">$${plant.price}</h2>
+                    <button class="btn btn-secondary">Cart</button>
+                </div>
+            </div>
+        </div>
+        `;
+        treesContainer.append(filteredTreeCard);
+    });
+}
+
+
+// loading + displaying left side category btn
 const laodCatagories=async ()=>{
     const res = await fetch('https://openapi.programming-hero.com/api/categories');
     const data = await res.json();
@@ -23,7 +60,7 @@ const laodCatagories=async ()=>{
         const newBtn = document.createElement('div');
         newBtn.innerHTML = `
         <div>
-            <button class="btn btn-outline btn-outline w-full">${category.category_name}</button>
+            <button onclick="loadCategory(${category.id})" class="btn btn-outline btn-outline w-full">${category.category_name}</button>
         </div>
         `;
         catagoriesContainer.append(newBtn);
